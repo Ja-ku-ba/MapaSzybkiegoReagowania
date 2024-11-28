@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Index</h1>
+    <!-- <h1>Co jest 1, 2, 3?</h1> -->
+     <Map />
   </div>
 </template>
 

@@ -1,8 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated>
-      <Header />
-    </q-header>
+    <Header />
 
     <q-page-container>
       <NuxtLayout>
@@ -10,16 +8,12 @@
       </NuxtLayout>
     </q-page-container>
 
-    <!-- <q-footer>
-      <div class="text-center">Footer Content</div>
-    </q-footer> -->
+      <Footer />
   </q-layout>
 </template>
 
 <script setup lang="ts">
-  import Header from './src/components/Header.vue'; 
 </script>
 
 <style scoped>
-  /* Style dla aplikacji */
 </style>
