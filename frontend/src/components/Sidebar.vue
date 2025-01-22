@@ -6,16 +6,25 @@
     :width="300"
     show-if-above
   >
-    <q-scroll-area class="fit">
-      <div class="q-pa-sm">
-        <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
+ 
+    <q-scroll-area class="fit q-pa-lg column">
+      <div v-if="userStore.isAuthenticated">
+        <span>@{{userStore.user.username}}</span>
+        <q-separator />
+        <NuxtLink @click="userStore.logout()">Wyloguj</NuxtLink>
+      </div>  
+      <div v-else class="q-pa-md">
+        <NuxtLink to="account/login">Zaloguj</NuxtLink>
       </div>
     </q-scroll-area>
   </q-drawer>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['rightDrawerOpen']);
+import { useUserStore } from '~~/stores/user';
+
+const userStore = useUserStore()
+const rightDrawerOpen = useState('rightDrawerOpen');
 </script>
 
 <style scoped>

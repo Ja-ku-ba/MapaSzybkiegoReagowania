@@ -1,14 +1,10 @@
 <template>
-  <div>
-    <!-- <h1>Co jest 1, 2, 3?</h1> -->
-     <Map />
-  </div>
+  <Home />
 </template>
 
 <script lang="ts" setup>
-
+import Home from './Home.vue'
 </script>
 
 <style>
-
 </style>
