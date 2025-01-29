@@ -8,10 +8,7 @@ class CreateEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            "latitiude", "longitude", "creator", "approved", "banned", "type", 
-            "created_at", "updated_at", "description", "show_description", 
+            "latitiude", "longitude", "creator", "type", "description", 
+            "show_description" 
         ]
         
-    def validate(self, attrs):
-        print(attrs)
-        return super().validate(attrs)

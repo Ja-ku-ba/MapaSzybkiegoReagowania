@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
    
@@ -81,6 +82,9 @@ WSGI_APPLICATION = 'server.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAUL_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated'
     )
 }
 
@@ -139,11 +143,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CHANGE IT BEFORE MOVING ON SERVER
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'x-requested-with',
+    'accept',
+    'origin',
+    'user-agent',
+]
+
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
     
     "TOKEN_OBTAIN_SERIALIZER": "account.utils.MyTokenObtainPairSerializer",
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 AUTH_USER_MODEL = 'account.CustomUser'

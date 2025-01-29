@@ -29,7 +29,7 @@
         <template v-slot:navigation>
           <q-stepper-navigation class="full-width flex justify-between">
             <q-btn v-if="step > 0" flat color="primary" @click="$refs.stepper?.previous()" label="Cofnij" />
-            <q-btn @click="$refs.stepper?.next()" color="primary" :label="step === 4 ? 'Zakończ' : 'Dalej'" class="q-ml-auto" />
+            <q-btn @click="processEvent()" color="primary" :label="step === 2 ? 'Zakończ' : 'Dalej'" class="q-ml-auto" />
           </q-stepper-navigation>
         </template>
       </q-stepper>
@@ -43,10 +43,13 @@
 </template>
 
 <script setup lang="ts">
+import { useEventStore } from '~/stores/event';
 import FirstStep from './AddPoint/FirstStep.vue'
 import SecondStep from './AddPoint/SecondStep.vue'
 import ThirdStep from './AddPoint/ThirdStep.vue'
 
+const stepper = useState<any>(() => null);
+const eventStore = useEventStore();
 const showAddPointDialog = useState<boolean>('showAddPointDialog', () => false)
 const step = useState<number>('addPointStep', () => 0)
 
@@ -55,10 +58,14 @@ const doAssigments = (n: number) => {
   eventStore.type = n
 }
 
-
-import { useEventStore } from '~~/stores/event';
-
-const eventStore = useEventStore();
+const processEvent = () => {
+  if (step.value < 2) {
+    stepper.value?.next()
+  } else {
+    eventStore.sendEvent()
+    console.log("Zgłoszenie się dodaje")
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -10,9 +10,9 @@ import { useEventStore } from '@/stores/event'
 const eventStore = useEventStore()
 
 const useLocation = () => {
-    const success =  (position) => {
+    const success =  (position: any) => {
         eventStore.latitiude = position.coords.latitude;
-        eventStore.longnitiude = position.coords.longitude;
+        eventStore.longitude = position.coords.longitude;
     }
 
     const error = () => {

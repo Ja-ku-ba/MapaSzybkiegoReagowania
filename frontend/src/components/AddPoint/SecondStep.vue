@@ -1,7 +1,7 @@
 <template>
     <div class="colums q-mt-md">
         <span>Powiedz nam co się stało</span>
-        <textarea v-model="description" @click="doAssigments()" class="full-width q-my-sm" rows="5" placeholder="Opisz zdarzenie"></textarea>
+        <q-input type="textarea" v-model="description" @update:model-value="doAssigments()" class="full-width q-my-sm" rows="5" placeholder="Opisz zdarzenie"></q-input>
         <span>Czy chcesz aby inni widzieli ten opis?</span>
         <q-btn-toggle
             v-model="showUserDescription"
@@ -22,10 +22,10 @@
 <script setup lang="ts">
 import { useEventStore } from '@/stores/event'
 
-const evnetStore = useEventStore()
+const eventStore = useEventStore()
 
 const showUserDescription = useState<boolean>('showUserDescription', () => false)
-const description = useState<string>(() => '')
+const description = useState<string>('description', () => '')
 
 const doAssigments = () => {
     eventStore.description = description.value

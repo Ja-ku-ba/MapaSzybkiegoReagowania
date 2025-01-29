@@ -15,12 +15,14 @@ export const useUserStore = defineStore('user', {
                     method: 'POST',
                     body: JSON.stringify({ email, password }),
                 });
-
+                console.log(response)
                 const authTokens = response;
+                console.log(response)
                 const user = jwtDecode(authTokens.access);
 
                 this.user = user;
                 this.authTokens = authTokens;
+                console.log(authTokens)
                 this.isAuthenticated = true;
 
                 this.startTokenRefresh();
@@ -39,7 +41,7 @@ export const useUserStore = defineStore('user', {
             const currentTime = Math.floor(Date.now() / 1000);
             const timeToExpire = user.exp - currentTime;
 
-            const refreshTime = timeToExpire - 30 > 0 ? timeToExpire - 10     : 1;
+            const refreshTime = timeToExpire - 30 > 0 ? timeToExpire - 10 : 1;
 
             console.log(`Odświeżanie tokena za ${refreshTime} sekund...`);
             console.log(refreshTime * 1000)
@@ -57,6 +59,7 @@ export const useUserStore = defineStore('user', {
 
         async refreshToken() {
             try {
+                console.log('Odświeżanie tokena')
                 if (!this.authTokens?.refresh) {
                     this.logout();
                     return;

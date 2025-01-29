@@ -16,6 +16,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
   ],
+  plugins: [
+    '~/plugins/axios.js',
+  ],
 
   quasar: {
     extras: {
