@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   ],
   plugins: [
     '~/plugins/axios.js',
+    '~/plugins/loading.ts',
   ],
 
   quasar: {

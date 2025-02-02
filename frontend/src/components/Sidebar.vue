@@ -1,12 +1,10 @@
 <template>
-  <q-drawer
-    side="right"
-    v-if="rightDrawerOpen"
-    bordered
-    :width="300"
-    show-if-above
+  <q-drawer 
+    ref="drawerRef" 
+    side="right" 
+    v-model="rightDrawerOpen" 
+    bordered 
   >
- 
     <q-scroll-area class="fit q-pa-lg column">
       <div v-if="userStore.isAuthenticated">
         <span>@{{userStore.user.username}}</span>
@@ -24,7 +22,7 @@
 import { useUserStore } from '~~/stores/user';
 
 const userStore = useUserStore()
-const rightDrawerOpen = useState('rightDrawerOpen');
+const rightDrawerOpen = useState<boolean>('rightDrawerOpen');
 </script>
 
 <style scoped>

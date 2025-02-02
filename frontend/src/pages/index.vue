@@ -6,5 +6,5 @@
 import Home from './Home.vue'
 </script>
 
-<style>
+<style scoped>
 </style>
