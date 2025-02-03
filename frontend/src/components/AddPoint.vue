@@ -4,6 +4,7 @@
         v-model="step"
         ref="stepper"
         animated
+        class="full-width"
       >
         <q-step
           :name="0"
@@ -29,7 +30,7 @@
         <template v-slot:navigation>
           <q-stepper-navigation class="full-width flex justify-between">
             <q-btn v-if="step > 0" flat color="primary" @click="$refs.stepper?.previous()" label="Cofnij" />
-            <q-btn @click="processEvent()" color="primary" :label="step === 2 ? 'Zakończ' : 'Dalej'" class="q-ml-auto" />
+            <q-btn v-if="step > 0 && step < 2" @click="processEvent()" color="primary" :label="step === 2 ? 'Zakończ' : 'Dalej'" class="q-ml-auto" />
           </q-stepper-navigation>
         </template>
       </q-stepper>
@@ -58,12 +59,14 @@ const doAssigments = (n: number) => {
   eventStore.type = n
 }
 
-const processEvent = () => {
+const processEvent = async () => {
   if (step.value < 2) {
     stepper.value?.next()
   } else {
-    eventStore.sendEvent()
-    console.log("Zgłoszenie się dodaje")
+    const resp = await eventStore.sendEvent()
+    if (resp) {
+      step.value = 9
+    }
   }
 }
 </script>
