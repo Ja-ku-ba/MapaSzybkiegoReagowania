@@ -56,7 +56,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=256, unique=True)
+    username = models.CharField(_('username'), max_length=256, unique=True)
     email = models.EmailField(_("email address"), unique=True)
     # Set up the email field as the unique identifier for users.
     # This has nothing to do with the username

@@ -4,6 +4,7 @@
     side="right" 
     v-model="rightDrawerOpen" 
     bordered 
+    overlay
   >
     <q-scroll-area class="fit q-pa-lg column">
       <div v-if="userStore.isAuthenticated">

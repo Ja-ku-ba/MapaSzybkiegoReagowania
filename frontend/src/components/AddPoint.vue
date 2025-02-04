@@ -17,6 +17,7 @@
           :name="1"
           title=""
         >
+        {{ stepperShow }}
           <SecondStep />
         </q-step>
 
@@ -30,12 +31,12 @@
         <template v-slot:navigation>
           <q-stepper-navigation class="full-width flex justify-between">
             <q-btn v-if="step > 0" flat color="primary" @click="$refs.stepper?.previous()" label="Cofnij" />
-            <q-btn v-if="step > 0 && step < 2" @click="processEvent()" color="primary" :label="step === 2 ? 'Zakończ' : 'Dalej'" class="q-ml-auto" />
+            <q-btn v-if="stepperShow()" @click="processEvent()" color="primary" 
+              :label="finishFinalStep() ? `Zakończ` : `Dalej`" class="q-ml-auto" />
           </q-stepper-navigation>
         </template>
       </q-stepper>
     </q-dialog>
-
     <div v-if="!showAddPointDialog" class="q-pa-md q-gutter-lg add-point-container">
         <q-btn size="24px" round color="primary" icon="add" @click="showAddPointDialog=true">
             <q-tooltip>Dodaj nowe zdarzenie</q-tooltip>
@@ -54,6 +55,20 @@ const eventStore = useEventStore();
 const showAddPointDialog = useState<boolean>('showAddPointDialog', () => false)
 const step = useState<number>('addPointStep', () => 0)
 
+const stepperShow = ():boolean => {
+  if (step.value !== 2) {
+    return step.value > 0
+  } else {
+    return eventStore.validState()
+  }
+}
+
+const finishFinalStep = ():boolean => {
+  const x = step.value === 2 && eventStore.validState()
+  console.log(x, step.value === 2, eventStore.validState())
+  return x
+}
+
 const doAssigments = (n: number) => {
   step.value=n
   eventStore.type = n
@@ -63,9 +78,12 @@ const processEvent = async () => {
   if (step.value < 2) {
     stepper.value?.next()
   } else {
-    const resp = await eventStore.sendEvent()
+    const resp = await eventStore.sendEvent();
+
     if (resp) {
-      step.value = 9
+      showAddPointDialog.value = false;
+      eventStore.resetState()
+      step.value = 0
     }
   }
 }
