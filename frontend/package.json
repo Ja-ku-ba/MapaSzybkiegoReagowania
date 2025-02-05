@@ -10,12 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxtjs/leaflet": "^1.2.4",
+    "@nuxtjs/leaflet": "^1.2.6",
     "@pinia/nuxt": "^0.9.0",
     "@quasar/extras": "^1.16.13",
     "axios": "^1.7.9",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "nuxt": "^3.14.1592",
     "nuxt-quasar-ui": "^2.1.7",
     "pinia-plugin-persistedstate": "^4.2.0",
