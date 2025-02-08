@@ -52,10 +52,10 @@ class EventsMarkers(ListAPIView):
       
         if not parsed_type:
             return None
-        
-        sw = data.get('sw', None)
-        ne = data.get('ne', None)
-        
+        swLat = data.get('swLat', None)
+        swLong = data.get('swLong', None)
+        neLat = data.get('neLat', None)
+        neLong = data.get('neLong', None)
         last_five_mins = timezone.now() - timedelta(minutes=5)
         past_due_thrre_days = timezone.now() + timedelta(days=3)
         events_points = Event.objects.filter(
@@ -63,6 +63,10 @@ class EventsMarkers(ListAPIView):
             # created_at__gte=last_five_mins,
             # created_at__lte=past_due_thrre_days,
             # approved=True,
-            # banned=False
+            latitiude__gte=swLat,
+            latitiude__lte=neLat,
+            longitude__gte=swLong,
+            longitude__lte=neLong,
+            banned=False
         )
         return events_points
