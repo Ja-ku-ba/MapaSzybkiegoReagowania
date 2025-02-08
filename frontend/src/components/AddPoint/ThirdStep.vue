@@ -3,7 +3,6 @@
         <p class="text-h6">Na sam koniec powiedz gdzie to się stało</p>
         <q-btn v-if="!cordsDone && !eventStore.validState()" @click="useLocation()">Znajdź mnie</q-btn>
         <q-btn v-else icon="check" color="positive" disable class="undisable-btn">Dziękujemy</q-btn>
-        {{ eventStore.validState() }}
     </div>
 </template>
 

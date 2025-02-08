@@ -13,7 +13,7 @@
         <NuxtLink @click="userStore.logout()">Wyloguj</NuxtLink>
       </div>  
       <div v-else class="q-pa-md">
-        <NuxtLink to="account/login">Zaloguj</NuxtLink>
+        <NuxtLink to="/account/login">Zaloguj</NuxtLink>
       </div>
     </q-scroll-area>
   </q-drawer>

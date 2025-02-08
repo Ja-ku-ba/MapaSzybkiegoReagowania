@@ -11,6 +11,12 @@ C_EVENTS_LIST = (
     (C_UTILITIES, 'Utilities'),
 )
 
+C_ALL_EVENTS = (
+    C_NATURAL,
+    C_LAW,
+    C_UTILITIES
+)
+
 C_LIKE = 'LKE'
 C_DISLIKE = 'DLK'
 

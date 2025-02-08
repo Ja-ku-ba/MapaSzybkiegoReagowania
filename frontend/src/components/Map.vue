@@ -1,58 +1,94 @@
 <template>
-  <div style="height:100vh; width:100vw">
-    <LMap
-      ref="map"
-      :zoom="6"
-      :max-zoom="18"
-      :center="[47.21322, -1.559482]"
-      :use-global-leaflet="true"
-      @ready="onMapReady"
-    >
-      <LTileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
-        layer-type="base"
-        name="OpenStreetMap"
-      />
+  <div style="height:100vh; width:100vw; margin-top: -98px;">
+    <LMap ref="map" :zoom="13" :max-zoom="18" :minZoom="11" :center="[54.4672944, 17.0165414]"
+      :use-global-leaflet="true" @ready="onMapReady">
+      <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors,  <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='http://cloudmade.com'>CloudMade</a>"
+        layer-type="base" name="OpenStreetMap" />
     </LMap>
   </div>
 </template>
 
 <script setup lang="ts">
-import L from 'leaflet'
 import { ref } from 'vue';
+const { $axios } = useNuxtApp();
+const map = ref<any>(null)
+const locations = useState<ILocations>(() => [])
 
-const map = ref(null) as any;
+const locations2 = Array.from({ length: 352 }, (_, i) => ({
+  name: `Marker ${i + 1}`,
+  lat: 54.4672944 + (Math.random() - 0.5) * 0.08,
+  lng: 17.0165414 + (Math.random() - 0.5) * 0.09,
+}));
+console.log(locations2)
 
-// Create locations data (20 locations around Nantes)
-const locations = [
-  { name: 'Nantes', lat: 47.218371, lng: -1.553621 },
-  { name: 'Saint-Nazaire', lat: 47.273018, lng: -2.213733 },
-  { name: 'La Baule', lat: 47.286835, lng: -2.393108 },
-  { name: 'Pornic', lat: 47.112, lng: -2.102 },
-  { name: 'Guérande', lat: 47.328, lng: -2.429 },
-  { name: 'Clisson', lat: 47.087, lng: -1.276 },
-  { name: 'Ancenis', lat: 47.366, lng: -1.176 },
-  { name: 'Châteaubriant', lat: 47.716, lng: -1.376 },
-  { name: 'Redon', lat: 47.652, lng: -2.084 },
-  { name: 'Pontchâteau', lat: 47.433, lng: -2.117 },
-  { name: 'Savenay', lat: 47.327, lng: -1.952 },
-  { name: 'Rezé', lat: 47.183, lng: -1.55 },
-  { name: 'Vertou', lat: 47.166, lng: -1.466 },
-  { name: 'Carquefou', lat: 47.283, lng: -1.5 },
-  { name: 'Orvault', lat: 47.283, lng: -1.633 },
-  { name: 'Saint-Herblain', lat: 47.216, lng: -1.65 },
-  { name: 'Sainte-Luce-sur-Loire', lat: 47.233, lng: -1.483 },
-  { name: 'Bouguenais', lat: 47.183, lng: -1.583 },
-  { name: 'Saint-Sébastien-sur-Loire', lat: 47.183, lng: -1.483 },
-  { name: 'Basse-Goulaine', lat: 47.2, lng: -1.483 }
-];
+const onMapReady = async () => {
+  // let debounceTimer;
+  // map.on('moveend', function() {
+  //   clearTimeout(debounceTimer);
+  //   debounceTimer = setTimeout(() => {
+  //     // Wysyłanie zapytania
+  //   }, 300); // Czekaj 300ms po zakończeniu ruchu mapy
+  // });
 
-// When the map is ready
-const onMapReady = () => {
+  const mapBounds = map.value.leafletObject.getBounds();
+  const sw = mapBounds.getSouthWest();
+  const ne = mapBounds.getNorthEast();
+  await getPoints(sw, ne)
   useLMarkerCluster({
     leafletObject: map.value.leafletObject,
-    markers: locations
+    markers: locations.value
   });
+  console.log(locations.value)
 }
+
+const props = defineProps(['type'])
+const { params } = useRoute()
+const getPoints = async (sw:any, ne:any) => {
+  await $axios.get('event/map-markers/', {
+    params: {
+      sw: sw,
+      ne: ne,
+      type: props.type,
+    }
+  }).then((response: any) => {
+    console.log(response)
+    response.data.forEach((cords) => {
+        locations.value.push({
+          lat: cords.latitiude,
+          lng: cords.longitude
+       })
+    })
+  }).catch((error) => {
+    console.log(error)
+  })
+
+  // $q.notify({
+  //   color: 'warning',`
+  //   textColor: 'white',
+  //   icon: 'cloud_done',
+  //   position: 'top',
+  //   message: 'Zdarzenie dodane pomyślnie, zobaczysz je na mapie w ciągu 5 minut'
+  // });
+
+  return true
+}
+
+// const showBounds = () => {
+//   if (!map.value || !map.value.leafletObject) {
+//     console.error('Map is not ready yet!');
+//     return;
+//   }
+
+//   const mapBounds = map.value.leafletObject.getBounds();
+//   const sw = mapBounds.getSouthWest();
+//   const ne = mapBounds.getNorthEast();
+
+//   console.log('Bounds:', mapBounds);
+//   console.log('South-West:', sw);
+//   console.log('North-East:', ne);
+
+//   console.log('SW lat:', sw.lat, 'SW lng:', sw.lng);
+//   console.log('NE lat:', ne.lat, 'NE lng:', ne.lng);
+// };
 </script>

@@ -3,17 +3,19 @@
     <q-page-container>
       <NuxtLayout>
         <Header />
-        <q-linear-progress
-          v-if="isLoading"
-          :key="isLoading"
-          class="page-loader"
-          :animation-speed="500"
-          stripe
-          rounded
-          color="negative"
-          :value="loading.progress"
-          indeterminate
-        />
+        <client-only>
+          <q-linear-progress
+            v-if="isLoading"
+            :key="isLoading"
+            class="page-loader"
+            :animation-speed="500"
+            stripe
+            rounded
+            color="negative"
+            :value="loading.progress || 0"
+            indeterminate
+          />
+        </client-only>
         <NuxtPage id="index" />
         
         <div v-if="userStore.isAuthenticated">
@@ -28,7 +30,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useUserStore } from '@/stores/user';
-const mymodel = useState<number>(() => 0)
 const userStore = useUserStore();
 userStore.initializeUser();
 

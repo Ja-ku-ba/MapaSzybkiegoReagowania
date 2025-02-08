@@ -12,3 +12,12 @@ class CreateEventSerializer(serializers.ModelSerializer):
             "show_description" 
         ]
         
+        
+class EventsMarekrsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = [
+            "latitiude", "longitude", "creator", "type", "description", 
+            "show_description" 
+        ]
+        

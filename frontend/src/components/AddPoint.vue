@@ -17,7 +17,6 @@
           :name="1"
           title=""
         >
-        {{ stepperShow }}
           <SecondStep />
         </q-step>
 
@@ -37,7 +36,7 @@
         </template>
       </q-stepper>
     </q-dialog>
-    <div v-if="!showAddPointDialog" class="q-pa-md q-gutter-lg add-point-container">
+    <div v-if="!showAddPointDialog" class="q-pa-md q-gutter-lg add-point-container show-above-map">
         <q-btn size="24px" round color="primary" icon="add" @click="showAddPointDialog=true">
             <q-tooltip>Dodaj nowe zdarzenie</q-tooltip>
         </q-btn>
@@ -105,5 +104,10 @@ const processEvent = async () => {
     padding: 10px;
     border-radius: 50px;
     color: grey;
+}
+
+
+.show-above-map {
+  z-index: 400;
 }
 </style>

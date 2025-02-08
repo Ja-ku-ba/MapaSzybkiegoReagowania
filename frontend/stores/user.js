@@ -15,14 +15,11 @@ export const useUserStore = defineStore('user', {
                     method: 'POST',
                     body: JSON.stringify({ email, password }),
                 });
-                console.log(response)
                 const authTokens = response;
-                console.log(response)
                 const user = jwtDecode(authTokens.access);
-
+                console.log(authTokens)
                 this.user = user;
                 this.authTokens = authTokens;
-                console.log(authTokens)
                 this.isAuthenticated = true;
 
                 this.startTokenRefresh();

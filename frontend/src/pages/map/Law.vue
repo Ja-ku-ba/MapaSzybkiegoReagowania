@@ -1,3 +1,3 @@
 <template>
-    <Map />
+    <Map type="law"/>
 </template>
