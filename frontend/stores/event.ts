@@ -41,6 +41,7 @@ export const useEventStore = defineStore('event', {
           latitiude: this.latitiude,
           longitude: this.longitude,
           description: this.description,
+          show_description: this.showDescription,
           type: this.type,
         })
 

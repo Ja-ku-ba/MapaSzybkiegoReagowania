@@ -1,6 +1,7 @@
 from datetime import time, timedelta
 
 from django.utils import timezone
+from django.db.models import Q
 
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
@@ -23,8 +24,7 @@ class CreateEvent(CreateAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
         data['creator'] = request.user.pk
-        data['type'] = get_type_by_int(request.data.get('type', None))
-
+        data['type'] = get_type_by_shorname(request.data.get('type', None))[0]
         serializer = CreateEventSerializer(data=data)
         
         if serializer.is_valid():
@@ -32,18 +32,11 @@ class CreateEvent(CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
-import random
+
 class EventsMarkers(ListAPIView):
     permission_classes = [AllowAny] 
     authentication_classes = []
     serializer_class = EventsMarekrsSerializer
- 
-    # def get(self, request, *args, **kwargs):
-    #     data = request.data.copy()
-    #     data['type'] = get_type_by_int(request.data.get('type', None))
-
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get_queryset(self):
         data = self.request.query_params.copy()
@@ -57,11 +50,11 @@ class EventsMarkers(ListAPIView):
         neLat = data.get('neLat', None)
         neLong = data.get('neLong', None)
         last_five_mins = timezone.now() - timedelta(minutes=5)
-        past_due_thrre_days = timezone.now() + timedelta(days=3)
+        past_due_thrre_days = timezone.now() - timedelta(days=3)
+
         events_points = Event.objects.filter(
             type__in=parsed_type, 
-            # created_at__gte=last_five_mins,
-            # created_at__lte=past_due_thrre_days,
+            created_at__range=(past_due_thrre_days, last_five_mins),
             # approved=True,
             latitiude__gte=swLat,
             latitiude__lte=neLat,

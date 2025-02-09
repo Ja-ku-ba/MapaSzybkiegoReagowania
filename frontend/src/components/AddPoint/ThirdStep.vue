@@ -1,7 +1,8 @@
 <template>
     <div class="column q-mt-md">
         <p class="text-h6">Na sam koniec powiedz gdzie to się stało</p>
-        <q-btn v-if="!cordsDone && !eventStore.validState()" @click="useLocation()">Znajdź mnie</q-btn>
+        {{ showFindMe }} - {{ !eventStore.validState }}
+        <q-btn v-if="showFindMe()" @click="useLocation()">Znajdź mnie</q-btn>
         <q-btn v-else icon="check" color="positive" disable class="undisable-btn">Dziękujemy</q-btn>
     </div>
 </template>
@@ -9,13 +10,15 @@
 <script lang="ts" setup>
 import { useEventStore } from '@/stores/event'
 const eventStore = useEventStore()
-const cordsDone = useState<boolean>(() => false)
+
+const showFindMe = () => {
+    return !eventStore.latitiude && !eventStore.longitude && !eventStore.validState()
+}
 
 const useLocation = () => {
     const success =  (position: any) => {
         eventStore.latitiude = position.coords.latitude;
         eventStore.longitude = position.coords.longitude;
-        cordsDone.value = true
     }
 
     const error = () => {

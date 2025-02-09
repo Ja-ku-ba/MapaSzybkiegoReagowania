@@ -10,7 +10,7 @@
           :name="0"
           title=""
         >
-          <FirstStep @setStep="(n:number) => doAssigments(n)"/>
+          <FirstStep @setStep="(n:string) => doAssigments(n)"/>
         </q-step>
 
         <q-step
@@ -28,6 +28,7 @@
         </q-step>
 
         <template v-slot:navigation>
+          {{ stepperShow() }} | {{ stepperShow }} | {{  step }} | {{ eventStore.validState }} | {{ eventStore.validState() }}
           <q-stepper-navigation class="full-width flex justify-between">
             <q-btn v-if="step > 0" flat color="primary" @click="$refs.stepper?.previous()" label="Cofnij" />
             <q-btn v-if="stepperShow()" @click="processEvent()" color="primary" 
@@ -54,6 +55,8 @@ const eventStore = useEventStore();
 const showAddPointDialog = useState<boolean>('showAddPointDialog', () => false)
 const step = useState<number>('addPointStep', () => 0)
 
+eventStore.type = 'nat'
+
 const stepperShow = ():boolean => {
   if (step.value !== 2) {
     return step.value > 0
@@ -68,8 +71,8 @@ const finishFinalStep = ():boolean => {
   return x
 }
 
-const doAssigments = (n: number) => {
-  step.value=n
+const doAssigments = (n: string) => {
+  step.value=2
   eventStore.type = n
 }
 

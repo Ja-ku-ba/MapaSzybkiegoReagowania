@@ -13,12 +13,18 @@
 import { ref } from 'vue';
 import type { ILocation } from '~/types/location';
 import type { ILocations } from '~/types/locations';
+import { createApp } from 'vue';
 const { $axios } = useNuxtApp();
 const map = ref<any>(null)
 const locations = useState<ILocations>(() => [])
 const props = defineProps(['type'])
 
 const onMapReady = async () => {
+  if (!map.value || !map.value.leafletObject) return;
+
+  const leafletMap = map.value.leafletObject;
+  leafletMap.addLayer(markerClusterGroup);
+
   locations.value = []
 
   const mapBounds = map.value.leafletObject.getBounds();
@@ -41,13 +47,32 @@ const onMapReady = async () => {
   genereateMarkers(transformPoints(points));
 }
 
+import MarkerDetails from "../components/MarkerDetails.vue";
+import L from 'leaflet';
+import 'leaflet.markercluster';
+import { Quasar } from "quasar";
+const markerClusterGroup = L.markerClusterGroup();
 const genereateMarkers = (newPoints: ILocations) => {
-  console.log(newPoints)
-  useLMarkerCluster({
-    leafletObject: map.value.leafletObject,
-    markers: newPoints
+  markerClusterGroup.clearLayers();
+
+  newPoints.forEach(point => {
+  const marker = L.marker([point.lat, point.lng]);
+
+  const popupContainer = document.createElement('div');
+  const app = createApp(MarkerDetails, { 
+    creator: point.creator, 
+    description: point.description, 
+    createdAt: point.created_at 
   });
-}
+  app.use(Quasar);
+  app.mount(popupContainer);
+  marker.bindPopup(popupContainer);
+  markerClusterGroup.addLayer(marker);
+});
+
+
+  map.value.leafletObject.addLayer(markerClusterGroup);
+};
 
 const getPoints = async (sw: any, ne: any): Promise<ILocations> => {
   try {
@@ -60,9 +85,7 @@ const getPoints = async (sw: any, ne: any): Promise<ILocations> => {
         type: props.type,
       }
     });
-
-    console.log(response);
-    
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error fetching points:', error);

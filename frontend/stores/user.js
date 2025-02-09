@@ -17,7 +17,6 @@ export const useUserStore = defineStore('user', {
                 });
                 const authTokens = response;
                 const user = jwtDecode(authTokens.access);
-                console.log(authTokens)
                 this.user = user;
                 this.authTokens = authTokens;
                 this.isAuthenticated = true;

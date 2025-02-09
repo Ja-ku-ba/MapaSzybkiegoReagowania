@@ -5,9 +5,9 @@ export default defineNuxtPlugin((NuxtApp) => {
     const userStore = useUserStore();
     axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
     if(process.client){
-        let token = userStore.authTokens.access
+        let token = userStore.authTokens
         if(token){
-            console.log(token)
+            token = token.access
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
     }

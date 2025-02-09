@@ -1,3 +1,14 @@
 <template>
-    <Map type="law"/>
+    <ClientOnly>
+        <Map v-if="isPageLoaded" type="law"/>
+    </ClientOnly>
 </template>
+
+<script setup lang="ts">
+const isPageLoaded = useState<boolean>(() => false);
+  
+onMounted(async () => {
+    isPageLoaded.value = true;
+});
+</script>
+  
