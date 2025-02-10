@@ -1,3 +1,5 @@
+server/server_settings.py
+
 # Django #
 *.log
 *.pot
