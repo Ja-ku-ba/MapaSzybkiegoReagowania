@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-primary text-white" height-hint="98">
+  <q-header class="bg-primary text-white page-header" height-hint="98">
     <q-toolbar>
       <q-toolbar-title>
         <NuxtLink to="/" class="text-white">
@@ -27,4 +27,7 @@ const toggleDrawer = () => {
 </script>
 
 <style>
+.page-header {
+  height: 98px;
+}
 </style>

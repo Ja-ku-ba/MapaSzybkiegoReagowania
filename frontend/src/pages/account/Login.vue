@@ -1,63 +1,50 @@
 <template>
-    <div class="q-pa-md" style="max-width: 400px">
-        <q-form
-            @submit="onSubmit"
-            class="q-gutter-md fixed-center"
-        >
-            <q-input
-                label="Email"
-                filled
-                v-model="email"
-                type="email"
-                hint="Adres email użyty podczas rejestracji"
-                lazy-rules
-                :rules="[
-                    val => val && val.length > 0 || 'This field is required',
-                    val => /.+@.+\..+/.test(val) || 'Please enter a valid email address'
-                ]"
-            />
+    <div class="home-container fixed-center">
+      <div class="row">
+        <div class="col-xs-11 col-sm-8 col-md-4 col-lg-3 q-mx-auto">
+            <q-form @submit="onSubmit">
+                <q-input label="Email" filled v-model="email" type="email" hint="Adres email użyty podczas rejestracji"
+                    lazy-rules :rules="[
+                        val => val && val.length > 0 || 'To pole jest wymagane',
+                        val => /.+@.+\..+/.test(val) || 'Proszę, wprowadź poprawny adres email'
+                    ]" />
 
-            <q-input
-                v-model="password"
-                filled
-                :type="showPassword ? 'text' : 'password'"
-                label="Hasło"
-                :rules="[
-                    val => val && val.length >= 8 || 'Password must be at least 8 characters long'
-                ]"
-            >
-                <template v-slot:append>
-                    <q-icon
-                        :name="showPassword ? 'visibility': 'visibility_off'"
-                        class="cursor-pointer"
-                        @click="showPassword = !showPassword"
-                    />
-                </template>
-            </q-input>
+                <q-input v-model="password" filled :type="showPassword ? 'text' : 'password'" label="Hasło" :rules="[
+                    val => val && val.length >= 8 || 'Hasło musi mieć co najmniej 8 znaków'
+                ]" class="q-mt-md">
+                    <template v-slot:append>
+                        <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
+                            @click="showPassword = !showPassword" />
+                    </template>
+                </q-input>
 
-            <div>
-                <q-btn label="Zaloguj" class="q-mx-auto" type="submit" color="primary"/>
-            </div>
-
-            <div>
-                <p>Nie masz jeszcze konta?</p>
-                <NuxtLink to="/account/register">Zarejestruj się</NuxtLink>
-            </div>
-        </q-form>
+                <div class="column q-gutter-sm q-mt-md">
+                    <q-btn class="col-sm-3" label="Zaloguj" type="submit" color="primary" />
+                    <div class="q-pt-md text-center">
+                        <p class="q-mb-none">Nie masz jeszcze konta?</p>
+                        <NuxtLink class="normal-link" to="/account/register">Zarejestruj się</NuxtLink>
+                    </div>
+                </div>
+            </q-form>
+        </div>
+    </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
-import { useUserStore } from '~~/stores/user';
+import { useQuasar } from 'quasar';
+// import { useUserStore } from '~/stores/user';
 
-const userStore = useUserStore()
-const $q = useQuasar()
+const userStore = useUserStore();
+const $q = useQuasar();
 
-const email = useState<string>(() => '')
-const password = useState<string>(() => '')
-const accept = useState<boolean>(() => false)
-const showPassword = useState<boolean>(() => false)
+const email = useState<string>(() => '');
+const password = useState<string>(() => '');
+const showPassword = useState<boolean>(() => false);
+
+definePageMeta({
+  middleware: ['auth-guard']
+})
 
 const onSubmit = async () => {
     try {
@@ -66,22 +53,20 @@ const onSubmit = async () => {
             textColor: 'white',
             icon: 'success',
             position: 'top',
-            message: 'WItaj ponownie!'
-        })
-        await navigateTo('/')
+            message: 'Witaj ponownie!'
+        });
+        await navigateTo('/');
     } catch (error) {
         $q.notify({
-            color: 'warning',
+            color: 'negative',
             textColor: 'white',
-            icon: 'cloud_done',
+            icon: 'error',
             position: 'top',
             message: 'Nie znaleziono konta o podanym adresie email lub hasło jest nieprawidłowe'
-        })
+        });
     }
-}
-
-interface Profile {
-    username: string;
-    email: string;
-}
+};
 </script>
+
+<style scoped>
+</style>

@@ -1,29 +1,31 @@
 from rest_framework import serializers
-from django.core.validators import validate_email
+from email_validator import validate_email as ve
 
 from .models import CustomUser
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['email', 'username', 'password']
-        
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
+        extra_kwargs = {
+                'password': {'write_only': True},
+                'email': {'validators': []},
+                'username': {'validators': []}
+            }
+
+    def validate_email(self, email):
         try:
-            email = validate_email(email)
-            if CustomUser.objects.filter(email=email).exists():
-                raise ValueError('Email already exists')
-            return email
-        except:
-            return ValueError('Invalid email')
+            email = ve(email, check_deliverability=False)
+            email = email.normalized
+        except Exception as e:
+            raise serializers.ValidationError('Wygląda że chcesz użyć nietypowego adresu email, użyj innego')
         
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
+        if CustomUser.objects.filter(email=email).exists():
+            raise serializers.ValidationError('Email jest zajęty, spróbuj się zalogoawć')
+        return email
+        
+    def validate_username(self, username):
         if CustomUser.objects.filter(username=username).exists():
-            raise ValueError('Username already exists')
+            raise serializers.ValidationError('Nazwa użytkownika jest zajęta')
         return username
-    
-    def create(self, validated_data):
-        return super().create(validated_data)

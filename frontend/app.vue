@@ -50,13 +50,21 @@ a {
     all: unset;
     cursor: pointer;
 }
+
+.normal-link {
+    color: #1976D2;
+    text-decoration: none;
+}
+
+.normal-link:hover {
+    text-decoration: underline;
+}
 </style>
 
 <style scoped>
 #index {
-  width: 100%;
-  margin-top: 98px;
-  height: calc(100% - 98px);
+  width: 100vw;
+  /* height: calc(100vh - 98px - 21px); */
 }
 
 .page-loader {
