@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 const { $axios, $q } = useNuxtApp();
-// import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 
 const email = useState<string>(() => '')

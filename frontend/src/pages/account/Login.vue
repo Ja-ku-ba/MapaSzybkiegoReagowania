@@ -18,12 +18,13 @@
                     </template>
                 </q-input>
 
-                <div class="column q-gutter-sm q-mt-md">
+                <div class="flex q-mt-md justify-center">
                     <q-btn class="col-sm-3" label="Zaloguj" type="submit" color="primary" />
-                    <div class="q-pt-md text-center">
-                        <p class="q-mb-none">Nie masz jeszcze konta?</p>
-                        <NuxtLink class="normal-link" to="/account/register">Zarejestruj się</NuxtLink>
-                    </div>
+                </div>
+
+                <div class="column q-mt-lg">
+                    <p class="q-mb-none text-center">Nie masz jeszcze konta?</p>
+                    <NuxtLink class="normal-link text-center" to="/account/register">Zarejestruj się</NuxtLink>
                 </div>
             </q-form>
         </div>
@@ -33,7 +34,6 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
-// import { useUserStore } from '~/stores/user';
 
 const userStore = useUserStore();
 const $q = useQuasar();
@@ -67,6 +67,3 @@ const onSubmit = async () => {
     }
 };
 </script>
-
-<style scoped>
-</style>
