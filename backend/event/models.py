@@ -8,7 +8,7 @@ from .constants import C_EVENTS_LIST, C_INTERACTION_LIST
 class Event(models.Model):
     latitiude = models.FloatField()
     longitude = models.FloatField()
-    creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_events')
     approved = models.BooleanField(default=False)
     banned = models.BooleanField(default=False)
     type = models.CharField(max_length=4, choices=C_EVENTS_LIST)

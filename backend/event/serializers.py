@@ -12,7 +12,7 @@ class CreateEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            "lat", "lng", "creator", "type", "description", 
+            "latitiude", "longitude", "creator", "type", "description", 
             "show_description" 
         ]
     
@@ -44,3 +44,13 @@ class EventsMarekrsSerializer(serializers.ModelSerializer):
         
     def get_creator(self, obj):
         return obj.creator.username
+    
+
+class EventsListSerializer(serializers.ModelSerializer):
+    creator = serializers.CharField(source='creator.username')
+    class Meta:
+        model = Event
+        fields = [
+            'latitiude', 'longitude', 'creator', 'type', 'created_at', 'description',
+            'show_description'
+        ]

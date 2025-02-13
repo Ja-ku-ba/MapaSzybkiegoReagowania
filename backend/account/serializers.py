@@ -2,6 +2,7 @@ from rest_framework import serializers
 from email_validator import validate_email as ve
 
 from .models import CustomUser
+from event.serializers import EventsListSerializer
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -29,3 +30,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
         if CustomUser.objects.filter(username=username).exists():
             raise serializers.ValidationError('Nazwa użytkownika jest zajęta')
         return username
+
+
+class UserEventsSerializer(serializers.ModelSerializer):
+    events = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = CustomUser
+        fields = ['events', 'email', 'username', 'date_joined']
+
+    def get_events(self, obj):
+        qs = EventsListSerializer(obj.user_events.all(), many=True)
+        return qs.data

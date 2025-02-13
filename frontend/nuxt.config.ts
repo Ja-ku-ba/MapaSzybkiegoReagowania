@@ -1,6 +1,11 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.API_URL,
+    }
+  },
   app: {
     head: {
       title: 'Mapa szybkiego reagowania',

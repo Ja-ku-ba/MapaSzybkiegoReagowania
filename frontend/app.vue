@@ -31,7 +31,6 @@
 import { computed } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
-userStore.initializeUser();
 
 const loading = useNuxtApp().$loading;
 const isLoading = computed(() => loading.isLoading.value);

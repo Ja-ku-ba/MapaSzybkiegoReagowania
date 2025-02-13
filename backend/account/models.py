@@ -6,11 +6,11 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     def create_user(
-        self,
-        email, 
-        username,
-        password,
-        **extra_fields
+            self,
+            email, 
+            username,
+            password,
+            **extra_fields
         ):
         if not email:
             raise ValueError(_("The Email must be set"))
@@ -26,11 +26,11 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
     def create_superuser(
-        self,
-        email, 
-        password,
-        username,
-        **extra_fields
+            self,
+            email, 
+            password,
+            username,
+            **extra_fields
         ):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)

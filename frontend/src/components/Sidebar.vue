@@ -45,7 +45,7 @@ const rightDrawerOpen = useState<boolean>('rightDrawerOpen');
 const menuList = useState(() =>
   [{
     icon: 'person',
-    label: userStore.user!.username,
+    label: userStore.user ? userStore.user.username : 'Gość',
     route: 'profile'
   }]
 )

@@ -57,6 +57,7 @@ const onSubmit = async () => {
         });
         await navigateTo('/');
     } catch (error) {
+        console.log(error)
         $q.notify({
             color: 'negative',
             textColor: 'white',

@@ -39,8 +39,6 @@ export const useUserStore = defineStore('user', {
 
             const refreshTime = timeToExpire - 30 > 0 ? timeToExpire - 10 : 1;
 
-            console.log(`Odświeżanie tokena za ${refreshTime} sekund...`);
-            console.log(refreshTime * 1000)
             this.refreshTimeout = setTimeout(() => {
                 this.refreshToken();
             }, refreshTime * 1000);
@@ -55,7 +53,6 @@ export const useUserStore = defineStore('user', {
 
         async refreshToken() {
             try {
-                console.log('Odświeżanie tokena')
                 if (!this.authTokens?.refresh) {
                     this.logout();
                     return;
@@ -81,9 +78,6 @@ export const useUserStore = defineStore('user', {
             this.authTokens = null;
             this.isAuthenticated = false;
             this.stopTokenRefresh();
-        },
-
-        initializeUser() {
         },
     },
     persist: true,
