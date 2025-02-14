@@ -12,7 +12,7 @@
             stripe
             rounded
             color="negative"
-            :value="loading.progress || 0"
+            :value="loading.progress"
             indeterminate
           />
         </client-only>

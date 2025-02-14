@@ -1,7 +1,6 @@
 <template>
     <div class="column q-mt-md">
         <p class="text-h6">Na sam koniec powiedz gdzie to się stało</p>
-        {{ showFindMe }} - {{ !eventStore.validState }}
         <q-btn v-if="showFindMe()" @click="useLocation()">Znajdź mnie</q-btn>
         <q-btn v-else icon="check" color="positive" disable class="undisable-btn">Dziękujemy</q-btn>
     </div>

@@ -1,5 +1,6 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
+  ssr: true,
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
     public: {
@@ -32,7 +33,6 @@ export default defineNuxtConfig({
     },
     plugins: ['Notify'],
   },
-
   runtimeConfig: {
     public: {
       apiUrl: process.env.API_URL,

@@ -1,6 +1,6 @@
 <template>
   <div style="height:100vh; width:100vw; margin-top: -98px;">
-    <LMap ref="map" :zoom="12" :max-zoom="18" :minZoom="11" :center="[54.4672944, 17.0165414]"
+    <LMap ref="map" :zoom="12" :max-zoom="18" :minZoom="11" :center="getCenterCords()"
       :use-global-leaflet="true" @ready="onMapReady">
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors,  <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='http://cloudmade.com'>CloudMade</a>"
@@ -18,6 +18,7 @@ const { $axios } = useNuxtApp();
 const map = ref<any>(null)
 const locations = useState<ILocations>(() => [])
 const props = defineProps(['type'])
+const mapCords = useState<any>('mapCords')
 
 const onMapReady = async () => {
   if (!map.value || !map.value.leafletObject) return;
@@ -85,7 +86,6 @@ const getPoints = async (sw: any, ne: any): Promise<ILocations> => {
         type: props.type,
       }
     });
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error fetching points:', error);
@@ -102,5 +102,13 @@ const transformPoints = (points: ILocations):ILocations => {
     })
   })
   return pointsList
+}
+
+const getCenterCords = () => {
+  console.log(mapCords.value)
+  if (mapCords.value) {
+    return mapCords.value
+  }
+  return [54.4672944, 17.0165414]
 }
 </script>

@@ -50,14 +50,14 @@ const onSubmit = async () => {
     try {
         await userStore.login(email.value, password.value);
         $q.notify({
+            color: 'positive',
             textColor: 'white',
-            icon: 'success',
+            icon: 'check',
             position: 'top',
             message: 'Witaj ponownie!'
         });
         await navigateTo('/');
     } catch (error) {
-        console.log(error)
         $q.notify({
             color: 'negative',
             textColor: 'white',

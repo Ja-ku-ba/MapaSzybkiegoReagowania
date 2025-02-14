@@ -1,7 +1,7 @@
 export default defineNuxtPlugin((nuxtApp) => {
-    const progress = ref(0)
+    const progress = ref<number>(0)
     const isLoading = ref(false)
-  
+
     const start = () => {
       progress.value = 10
       isLoading.value = true

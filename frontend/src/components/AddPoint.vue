@@ -10,7 +10,7 @@
           :name="0"
           title=""
         >
-          <FirstStep @setStep="(n:string) => doAssigments(n)"/>
+          <FirstStep @nextStep="step=1"/>
         </q-step>
 
         <q-step
@@ -28,7 +28,6 @@
         </q-step>
 
         <template v-slot:navigation>
-          {{ stepperShow() }} | {{ stepperShow }} | {{  step }} | {{ eventStore.validState }} | {{ eventStore.validState() }}
           <q-stepper-navigation class="full-width flex justify-between">
             <q-btn v-if="step > 0" flat color="primary" @click="$refs.stepper?.previous()" label="Cofnij" />
             <q-btn v-if="stepperShow()" @click="processEvent()" color="primary" 
@@ -45,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import { useEventStore } from '~/stores/event';
 import FirstStep from './AddPoint/FirstStep.vue'
 import SecondStep from './AddPoint/SecondStep.vue'
 import ThirdStep from './AddPoint/ThirdStep.vue'
@@ -54,8 +52,6 @@ const stepper = useState<any>(() => null);
 const eventStore = useEventStore();
 const showAddPointDialog = useState<boolean>('showAddPointDialog', () => false)
 const step = useState<number>('addPointStep', () => 0)
-
-eventStore.type = 'nat'
 
 const stepperShow = ():boolean => {
   if (step.value !== 2) {
@@ -66,14 +62,7 @@ const stepperShow = ():boolean => {
 }
 
 const finishFinalStep = ():boolean => {
-  const x = step.value === 2 && eventStore.validState()
-  console.log(x, step.value === 2, eventStore.validState())
-  return x
-}
-
-const doAssigments = (n: string) => {
-  step.value=2
-  eventStore.type = n
+  return step.value === 2 && eventStore.validState()
 }
 
 const processEvent = async () => {
