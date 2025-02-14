@@ -10,7 +10,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['email', 'username', 'password']
         extra_kwargs = {
-                'password': {'write_only': True},
+                # 'password': {'write_only': True},
                 'email': {'validators': []},
                 'username': {'validators': []}
             }
@@ -30,6 +30,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
         if CustomUser.objects.filter(username=username).exists():
             raise serializers.ValidationError('Nazwa użytkownika jest zajęta')
         return username
+
+    def create(self, validated_data):
+        return CustomUser.objects.create_user(**validated_data)
 
 
 class UserEventsSerializer(serializers.ModelSerializer):
