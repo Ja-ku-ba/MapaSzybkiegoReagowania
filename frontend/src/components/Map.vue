@@ -105,10 +105,13 @@ const transformPoints = (points: ILocations):ILocations => {
 }
 
 const getCenterCords = () => {
-  console.log(mapCords.value)
-  if (mapCords.value) {
-    return mapCords.value
+  let center = []
+  if (mapCords.value.length > 0) {
+    center = mapCords.value
+  } else {
+    center = [54.4672944, 17.0165414]
   }
-  return [54.4672944, 17.0165414]
+  console.log(center)
+  return center
 }
 </script>

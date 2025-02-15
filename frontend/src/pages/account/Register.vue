@@ -16,7 +16,7 @@
 
                 <div class="q-mt-md">
                     <q-checkbox v-model="termsRules" label="Zgadzaam się z polityką prywatności serwisu, ">
-                        <NuxtLink class="normal-link" href='https://en.wikipedia.org/wiki/Special:Random' target="_blank">
+                        <NuxtLink @click.prevent="showTerms()" class="normal-link" target="_blank">
                             poityka serwisu
                         </NuxtLink>
                     </q-checkbox>
@@ -73,7 +73,6 @@ const onSubmit = async () => {
             password: password.value,
             username: username.value
         }).then((response) => {
-            console.log(response)
             $q.notify({
                 color: 'green-4',
                 textColor: 'white',
@@ -82,12 +81,11 @@ const onSubmit = async () => {
                 message: 'Konto zostało założne'
             })
             userStore.login(email.value, password.value)
-
+            navigateTo('/')
         }).catch((error) => {
             let message = 'Wystąpił błąd podczas przetwarzania żądania.';
 
             const errorData = JSON.parse(error.request?.response || '{}');
-            console.log("Odpowiedź serwera:", errorData);
 
             if (typeof errorData === 'object' && errorData !== null) {
                 const errorMessages = Object.values(errorData)
@@ -106,5 +104,9 @@ const onSubmit = async () => {
             });
         });
     }
+}
+
+const showTerms = () => {
+    window.open('https://en.wikipedia.org/wiki/Special:Random', '_blank')
 }
 </script>

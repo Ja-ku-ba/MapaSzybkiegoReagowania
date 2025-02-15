@@ -21,7 +21,7 @@
 
         <div class="row justify-center">
             <div class="col-12 col-sm-10 col-md-6 col-lg-4">
-                <q-list v-if="eventsList.events" bordered padding>
+                <q-list v-if="eventsList.events?.length > 0" bordered padding>
                     <q-item v-ripple v-for="(event, idx) in eventsList.events" :key="idx">
                         <q-item-section>
                             <q-item-label>Dodane: {{ getNormalDate(event.created_at) }}</q-item-label>
@@ -32,6 +32,7 @@
                         </q-item-section>
                     </q-item>
                 </q-list>
+                <p class="float-center" v-else>Jeszcze nie masz dodanych punktów</p>
             </div>
         </div>
     </div>

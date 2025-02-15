@@ -1,5 +1,5 @@
 <template>
-  {{ error }}
+  <!-- {{ error }} -->
     <div class="error-page">
         <div v-if="error.statusCode === 404">
             <h1>404 - Strona nie została znaleziona</h1>
