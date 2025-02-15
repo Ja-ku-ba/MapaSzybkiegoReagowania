@@ -2,11 +2,10 @@ import axios from "axios";
 import { useUserStore } from "@/stores/user";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // const config = nuxtApp.$config.public;
+  const config = useRuntimeConfig();
 
   const instance = axios.create({
-    // baseURL: config.apiUrl
-    baseURL: 'http://127.0.0.1:8000/api'
+    baseURL: config.public.baseUrl
   });
 
   if (import.meta.client) {

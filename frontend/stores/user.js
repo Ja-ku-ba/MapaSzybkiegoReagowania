@@ -10,8 +10,9 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         async login(email, password) {
+            const BASE_URL = useRuntimeConfig().public.baseUrl;
             try {
-                const response = await $fetch(`http://127.0.0.1:8000/api/account/api/token/`, {
+                const response = await $fetch(`${BASE_URL}/account/api/token/`, {
                     method: 'POST',
                     body: JSON.stringify({ email, password }),
                 });
@@ -53,13 +54,14 @@ export const useUserStore = defineStore('user', {
 
         async refreshToken() {
             try {
+                const BASE_URL = useRuntimeConfig().public.baseUrl;
                 if (!this.authTokens?.refresh) {
                     this.logout();
                     return;
                 }
 
                 const refreshToken = this.authTokens.refresh;
-                const response = await $fetch(`http://127.0.0.1:8000/api/account/api/token/refresh/`, {
+                const response = await $fetch(`${BASE_URL}/account/api/token/refresh/`, {
                     method: "POST",
                     body: { refresh: refreshToken },
                 });

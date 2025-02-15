@@ -33,12 +33,6 @@ export default defineNuxtConfig({
     },
     plugins: ['Notify'],
   },
-  runtimeConfig: {
-    public: {
-      apiUrl: process.env.API_URL,
-    },
-  },
-  
   dir: {
     pages: 'src/pages',
   },

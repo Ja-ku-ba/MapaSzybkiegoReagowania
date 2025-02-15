@@ -53,7 +53,7 @@ onMounted(() => {
 
 const getUserProfileInfo = async () => {
     try {
-        const response: IUserEvents = await $axios.get('account/profile/')
+        const response = await $axios.get('account/profile/')
         eventsList.value = response.data
     } catch (error) {
         console.error('Error fetching user profile info:', error)
