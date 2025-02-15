@@ -1,10 +1,10 @@
 <template>
-  <div class="home-container fixed-center">
+  <div class="home-container q-mt-xl">
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 q-mx-auto">
+      <div class="col-xs-11 col-sm-11 col-md-10 col-lg-8 q-mx-auto">
         <!-- <q-form @submit="onSubmit" class="q-pa-md box"> -->
           <div class="full-width">
-            <h1 class="text-h5 text-center">Zobacz co się dzieje w Twojej okolicy</h1>
+            <h1 class="text-h5 text-center">Zobacz co się dzieje w Twojej okolicy...</h1>
             <q-input v-model="search" @keydown="(e:any) => trySearchPlace(e)" rounded outlined label="Skąd jesteś?" type="search" class="w-100">
               <template v-slot:append>
                 <q-icon name="search" @click="getLocation()"/>
