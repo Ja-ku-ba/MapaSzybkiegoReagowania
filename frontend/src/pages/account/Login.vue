@@ -1,7 +1,6 @@
 <template>
-    <div class="home-container fixed-center">
-      <div class="row">
-        <div class="col-xs-11 col-sm-8 col-md-4 col-lg-3 q-mx-auto">
+    <div class="row">
+        <div class="col-xs-11 col-sm-8 col-md-4 col-lg-3 q-mx-auto q-mt-xl">
             <q-form @submit="onSubmit">
                 <q-input label="Email" filled v-model="email" type="email" hint="Adres email użyty podczas rejestracji"
                     lazy-rules :rules="[
@@ -29,7 +28,6 @@
             </q-form>
         </div>
     </div>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -56,7 +54,7 @@ const onSubmit = async () => {
             position: 'top',
             message: 'Witaj ponownie!'
         });
-        await navigateTo('/');
+        navigateTo('/');
     } catch (error) {
         $q.notify({
             color: 'negative',

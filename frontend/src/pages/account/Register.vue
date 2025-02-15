@@ -1,38 +1,36 @@
 <template>
-    <div class="fixed-center">
-        <div class="row">
-            <div class="col-xs-11 col-sm-8 col-md-4 col-lg-3 q-mx-auto">
-                <q-form @submit="onSubmit()">
-                    <q-input label="Nazwa użytkownika" filled v-model="username" type="text" lazy-rules
-                        :rules="[val => val && val.length > 0 || 'To pole jest wymagane']" />
-                    <q-input label="Email" filled v-model="email" type="email" lazy-rules
-                        :rules="[val => val && val.length > 0 || 'To pole jest wymagane']" />
+    <div class="row">
+        <div class="col-xs-11 col-sm-8 col-md-4 col-lg-3 q-mx-auto q-mt-xl  ">
+            <q-form @submit="onSubmit()">
+                <q-input label="Nazwa użytkownika" filled v-model="username" type="text" lazy-rules
+                    :rules="[val => val && val.length > 0 || 'To pole jest wymagane']" />
+                <q-input label="Email" filled v-model="email" type="email" lazy-rules
+                    :rules="[val => val && val.length > 0 || 'To pole jest wymagane']" />
 
-                    <q-input v-model="password" filled :type="showPassword ? 'text' : 'password'" label="Hasło">
-                        <template v-slot:append>
-                            <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
-                                @click="showPassword = !showPassword" />
-                        </template>
-                    </q-input>
+                <q-input v-model="password" filled :type="showPassword ? 'text' : 'password'" label="Hasło">
+                    <template v-slot:append>
+                        <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
+                            @click="showPassword = !showPassword" />
+                    </template>
+                </q-input>
 
-                    <div class="q-mt-md">
-                        <q-checkbox v-model="termsRules" label="Zgadzaam się z polityką prywatności serwisu, ">
-                            <NuxtLink class="normal-link" href='https://en.wikipedia.org/wiki/Special:Random' target="_blank">
-                                poityka serwisu
-                            </NuxtLink>
-                        </q-checkbox>
-                    </div>
+                <div class="q-mt-md">
+                    <q-checkbox v-model="termsRules" label="Zgadzaam się z polityką prywatności serwisu, ">
+                        <NuxtLink class="normal-link" href='https://en.wikipedia.org/wiki/Special:Random' target="_blank">
+                            poityka serwisu
+                        </NuxtLink>
+                    </q-checkbox>
+                </div>
 
-                    <div class="flex q-mt-lg">
-                        <q-btn label="Zarejestruj" class="q-mx-auto" type="submit" color="primary" />
-                    </div>
+                <div class="flex q-mt-lg">
+                    <q-btn label="Zarejestruj" class="q-mx-auto" type="submit" color="primary" />
+                </div>
 
-                    <div class="column q-mt-lg">
-                        <p class="q-mx-auto q-mb-none q-mt-sm">Masz już konto?</p>
-                        <NuxtLink class="q-mx-auto normal-link" to="/account/login">Zaloguj się</NuxtLink>
-                    </div>
-                </q-form>
-            </div>
+                <div class="column q-mt-lg">
+                    <p class="q-mx-auto q-mb-none q-mt-sm">Masz już konto?</p>
+                    <NuxtLink class="q-mx-auto normal-link" to="/account/login">Zaloguj się</NuxtLink>
+                </div>
+            </q-form>
         </div>
     </div>
 </template>

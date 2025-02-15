@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-page-container>
+    <q-page-container class="index-container">
       <NuxtLayout>
         <Header />
         <client-only>
@@ -16,7 +16,9 @@
             indeterminate
           />
         </client-only>
-        <NuxtPage id="index" />
+        <div class="index-container">
+          <NuxtPage class="index-container"/>
+        </div>
         
         <div v-if="userStore.isAuthenticated">
           <AddPoint />
@@ -61,8 +63,8 @@ a {
 </style>
 
 <style scoped>
-#index {
-  width: 100vw;
+.index-container {
+  width: 100% !important;
   /* height: calc(100vh - 98px - 21px); */
 }
 
