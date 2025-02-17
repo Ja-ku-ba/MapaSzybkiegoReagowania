@@ -8,13 +8,12 @@
       <q-card-section v-if="!!props.description" class="q-pt-none">
         {{ props.description }}
       </q-card-section>
-      {{ props }}
     </q-card>
 </template>
 
 <script setup lang="ts">
-const $q = useQuasar();
 import { QCard, QCardSection } from 'quasar';
+
 const props = defineProps({
     creator: String,
     description: String,

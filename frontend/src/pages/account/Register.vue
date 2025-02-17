@@ -81,7 +81,7 @@ const onSubmit = async () => {
                 message: 'Konto zostało założne'
             })
             userStore.login(email.value, password.value)
-            navigateTo('/')
+            // navigateTo('/')
         }).catch((error) => {
             let message = 'Wystąpił błąd podczas przetwarzania żądania.';
 

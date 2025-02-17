@@ -54,7 +54,7 @@ const onSubmit = async () => {
             position: 'top',
             message: 'Witaj ponownie!'
         });
-        navigateTo('/')
+        // navigateTo('/')
     } catch (error) {
         $q.notify({
             color: 'negative',

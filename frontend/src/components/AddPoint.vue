@@ -87,7 +87,7 @@ const processEvent = async () => {
 
 .add-point-container {
     position: fixed;
-    bottom: 15px;
+    bottom: 25px;
     right: 15px;
 }
 
@@ -100,6 +100,6 @@ const processEvent = async () => {
 
 
 .show-above-map {
-  z-index: 400;
+  z-index: 1100;
 }
 </style>

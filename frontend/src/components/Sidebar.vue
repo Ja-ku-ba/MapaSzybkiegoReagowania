@@ -4,7 +4,7 @@
       <q-list>
         <div v-if="userStore.isAuthenticated">
         <template v-for="(menuItem, index) in menuList" :key="index">
-          <q-item clickable v-ripple :to="menuItem.route">
+          <q-item clickable v-ripple :to='`/${menuItem.route}`'>
             <q-item-section avatar class="q-pr-none">
               <q-icon :name="menuItem.icon" class="q-pr-none" />
             </q-item-section>

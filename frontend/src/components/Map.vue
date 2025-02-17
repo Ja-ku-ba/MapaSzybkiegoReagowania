@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh; width:100vw; margin-top: -98px;">
+  <div style="height:calc(100vh - 98px - 21px); width:100vw;">
     <LMap ref="map" :zoom="12" :max-zoom="18" :minZoom="11" :center="getCenterCords()"
       :use-global-leaflet="true" @ready="onMapReady">
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -58,7 +58,7 @@ const genereateMarkers = (newPoints: ILocations) => {
 
   newPoints.forEach(point => {
   const marker = L.marker([point.lat, point.lng]);
-
+  console.log(point)
   const popupContainer = document.createElement('div');
   const app = createApp(MarkerDetails, { 
     creator: point.creator, 
@@ -98,7 +98,10 @@ const transformPoints = (points: ILocations):ILocations => {
   points.forEach((cords:ILocation) => {
     pointsList.push({
       lat: cords.latitiude,
-      lng: cords.longitude
+      lng: cords.longitude,
+      creator: cords.creator,
+      description: cords.desc,
+      created_at: cords.created_at
     })
   })
   return pointsList
@@ -114,3 +117,10 @@ const getCenterCords = () => {
   return center
 }
 </script>
+
+
+<style>
+.leaflet-popup-content {
+  margin: 0;
+}
+</style>

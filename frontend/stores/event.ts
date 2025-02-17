@@ -46,7 +46,7 @@ export const useEventStore = defineStore('event', {
         })
 
         $q.notify({
-          color: 'warning',
+          color: 'positive',
           textColor: 'white',
           icon: 'cloud_done',
           position: 'top',

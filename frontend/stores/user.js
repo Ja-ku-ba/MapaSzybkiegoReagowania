@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
                 this.isAuthenticated = true;
 
                 this.startTokenRefresh();
-                // navigateTo('/')
+                navigateTo('/')
             } catch (error) {
                 console.error("Login error:", error);
                 throw error;
