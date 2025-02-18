@@ -16,7 +16,7 @@
             indeterminate
           />
         </client-only>
-        <div class="index-container">
+        <div class="index-container" v-if="loaded">
           <NuxtPage class="index-container"/>
         </div>
         
@@ -36,6 +36,7 @@ const userStore = useUserStore();
 
 const loading = useNuxtApp().$loading;
 const isLoading = computed(() => loading.isLoading.value);
+const loaded = useState<boolean>(() => false)
 
 onBeforeMount(() => {
   loading.start();
@@ -43,6 +44,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   loading.stop();
+  loaded.value = true
 });
 </script>
 

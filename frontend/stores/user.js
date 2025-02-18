@@ -23,10 +23,11 @@ export const useUserStore = defineStore('user', {
                 this.isAuthenticated = true;
 
                 this.startTokenRefresh();
-                navigateTo('/')
+                navigateTo('/', {external: true})
+                return true
             } catch (error) {
                 console.error("Login error:", error);
-                throw error;
+                return false
             }
         },
 
@@ -81,7 +82,10 @@ export const useUserStore = defineStore('user', {
             this.authTokens = null;
             this.isAuthenticated = false;
             this.stopTokenRefresh();
-        },
+        
+            // navigateTo('/')
+            // window.location.reload()
+        }
     },
     persist: true,
 });

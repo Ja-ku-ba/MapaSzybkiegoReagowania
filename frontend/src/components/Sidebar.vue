@@ -45,10 +45,10 @@ const rightDrawerOpen = useState<boolean>('rightDrawerOpen');
 const menuList = useState(() =>
   [{
     icon: 'person',
-    label: userStore.user ? userStore.user.username : 'Gość',
+    label: userStore.isAuthenticated ? userStore.user.username : 'Gość',
     route: 'profile'
   }]
-)
+) 
 </script>
 
 <style scoped></style>

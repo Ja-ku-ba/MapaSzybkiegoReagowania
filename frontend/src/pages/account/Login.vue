@@ -45,8 +45,8 @@ definePageMeta({
 })
 
 const onSubmit = async () => {
-    try {
-        userStore.login(email.value, password.value);
+    const status = await userStore.login(email.value, password.value);
+    if (status) {
         $q.notify({
             color: 'positive',
             textColor: 'white',
@@ -55,7 +55,7 @@ const onSubmit = async () => {
             message: 'Witaj ponownie!'
         });
         // navigateTo('/')
-    } catch (error) {
+    } else {
         $q.notify({
             color: 'negative',
             textColor: 'white',
